@@ -25,13 +25,34 @@ return {
 					completion = cmp.config.window.bordered(),
 					documentation = cmp.config.window.bordered(),
 				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-k>"] = cmp.mapping.scroll_docs(-4),
-					["<C-j>"] = cmp.mapping.scroll_docs(4),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
+				--			mapping = cmp.mapping.preset.insert({
+				-- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+				-- ["<leader>k"] = cmp.mapping.select_prev_item(),
+				--				["<Space-Tab>"] = cmp.mapping.select_next_item(),
+				-- ["<C-f>"] = cmp.mapping.scroll_docs(4),
+				--					["<C-Space>"] = cmp.mapping.complete(),
+				--					["<C-e>"] = cmp.mapping.abort(),
+				--					["<CR>"] = cmp.mapping.confirm({ select = true }),
+
+				--			}),
+
+				mapping = {
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
-				}),
+				},
 
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
